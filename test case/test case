@@ -1,0 +1,134 @@
+import unittest
+import pygame
+import os
+import random
+
+class TestGameSetup(unittest.TestCase):
+   def setUp(self):
+       pygame.init()
+       self.screen = pygame.display.set_mode((800,600))
+       pygame.display.set_caption('space shooter game')
+
+       self.BACKGROUND_SPACE_IMAGE = pygame.image.load(os.path.join('Assets','space.png'))
+       self.YELLOW_SPACE_IMAGE = pygame.image.load(os.path.join('Assets','spaceship_yellow.png'))
+       self.YELLOW_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(self.YELLOW_SPACE_IMAGE,(70,60)),180)
+
+       self.FPS = 300
+       self.spaceshipX = 370
+       self.spaceshipY = 490
+
+       self.changeX=0
+
+   def test_images_loaded(self):
+       self.assertIsNotNone(self.BACKGROUND_SPACE_IMAGE)
+       self.assertIsNotNone(self.YELLOW_SPACE_IMAGE)
+       self.assertIsNotNone(self.YELLOW_SPACESHIP)
+
+   def test_screen_setup(self):
+       self.assertIsNotNone(self.screen)
+       self.assertEqual(self.screen.get_width(), 800)
+       self.assertEqual(self.screen.get_height(), 600)
+
+
+
+def test_alien_creation():
+   # Mock the random function
+   random.randint = lambda a, b: 10
+
+   # Call the alien creation code
+   no_of_aliens = 6
+   for i in range(no_of_aliens):
+       ALIEN = pygame.image.load('enemy.png')
+       alienX = random.randint(0, 736)
+       alienY = random.randint(30, 150)
+       alienspeedX = 1
+       alienspeedY = 40
+
+   assert ALIEN == pygame.image.load('enemy.png')
+   assert alienX == 10
+   assert alienY == 10
+   assert alienspeedX == 1
+   assert alienspeedY == 40
+
+
+
+   class TestImageLoading(unittest.TestCase):
+      def test_load_image(self):
+          try:
+              BULLET = pygame.image.load('bullet.png')
+              self.assertIsInstance(BULLET, pygame.Surface)
+          except pygame.error:
+              self.fail("Image loading failed")
+
+   if __name__ == '__main__':
+      unittest.main()
+
+class TestDrawWindow(unittest.TestCase):
+   def test_draw_window(self):
+       # Setup
+       screen = pygame.Surface((800, 600)) # Create a dummy screen
+       YELLOW_SPACESHIP = pygame.Surface((50, 50)) # Create a dummy spaceship
+       ALIEN = pygame.Surface((50, 50)) # Create a dummy alien
+       spaceshipX, spaceshipY = 100, 100
+       alienX, alienY = 200, 200
+
+       # Exercise
+       draw_window(screen, YELLOW_SPACESHIP, spaceshipX, spaceshipY, ALIEN, alienX, alienY)
+
+       # Verify
+       self.assertIsNotNone(screen.get_at((spaceshipX, spaceshipY))) # Check spaceship is drawn
+       self.assertIsNotNone(screen.get_at((alienX, alienY)))
+
+while running:
+   clock.tick(FPS)
+   screen.blit(BACKGROUND_SPACE_IMAGE,(0,0))
+   for event in pygame.event.get():
+       if event.type == pygame.QUIT:
+           running = False
+       if event.type == pygame.KEYDOWN:
+           if event.key == pygame.K_LEFT:
+               changeX = -1
+           if event.key == pygame.K_RIGHT:
+               changeX = 1
+           if event.key == pygame.K_SPACE:
+               if check is False:
+                  check = True
+                  bulletX = spaceshipX + 13.5
+       if event.type == pygame.KEYUP:
+           if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
+               changeX = 0
+   if alienY > 420:
+       for j in range(no_of_aliens):
+           alienY[j] = 2000
+       Gameover()
+       break
+    alienX[i] += alienspeedX
+   if alienX[i] <= 0:
+       alienspeedX[i] = 1
+       alienY[i] += alienspeedY
+   if alienX[i] >= 730:
+       alienspeedX[i] = -1
+       alienY[i] += alienspeedY
+   for i in range(no_of_aliens):
+       distance = math.sqrt(math.pow(bulletX - alienX[i], 2) + math.pow(bulletY - alienY[i], 2))
+       if distance < 27:
+           bulletY = 460
+           check = False
+           alienX[i] = random.randint(0, 736)
+           alienY[i] = random.randint(30, 150)
+           score += 1
+       screen.blit(ALIEN[i], (alienX[i], alienY[j]))
+   if bulletY <= 0:
+       bulletY = 460
+       check = False
+   if check is True:
+       screen.blit(BULLET, (bulletX, bulletY))
+       bulletY = -1
+   score_text()
+   draw_window()
+   pygame.display.update()
+
+
+
+
+
